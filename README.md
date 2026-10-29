@@ -1,6 +1,9 @@
 <p align="center">
   <img src="docs/img/banner.png" alt="PZ Workshop Doctor" width="100%">
 </p>
+<!-- the screenshot images below use markdown ![]() syntax on purpose:
+     GitHub opens those in the built-in image viewer (lightbox) on click,
+     while HTML <img> tags navigate to the blob page instead -->
 <p align="center">
   <a href="../../releases/latest"><img src="docs/img/button-download-en.png" alt="Download for Windows"></a>
 </p>
@@ -12,12 +15,17 @@
 
 # PZ Workshop Doctor
 
-Unofficial mod doctor for **Project Zomboid** (Steam Workshop). One file, one window, one button: it scans Steam, the saves and every mod by itself, finds the problems the in-game manager cannot see, and fixes them — backups first. While it works, a survivor walks the road along the bottom, the horde shambling behind him — **his walk is the progress bar**: when the round ends he reaches the end of the road, celebrates, and the zombies drop dead. When something breaks, the horde catches him and eats him instead.
+Unofficial mod doctor for **Project Zomboid** (Steam Workshop). One file, one window, one button: it scans Steam, the saves and every mod by itself, finds the problems the in-game manager cannot see, and fixes them — backups first. While it works, a survivor walks the road along the bottom, the horde shambling behind him — **his walk is the progress bar**: when the round ends he reaches the end of the road, the window reads "THE STREET IS CLEAN — YOU SURVIVED", and the zombies drop dead. When something breaks, the horde catches him and eats him instead.
 
 | It finds everything by itself | One green button | Done |
 |---|---|---|
-| <img src="docs/img/workshop/v1.5/en/shot-1-before.png" alt="Before"> | <img src="docs/img/workshop/v1.5/en/shot-2-scan.png" alt="Scan"> | <img src="docs/img/workshop/v1.5/en/shot-4-after.png" alt="After"> |
-| The whole pile of problems, in one window. | The survivor walks the road — the walk is the progress bar. | He made it to the end: hearts pop, the horde drops. |
+| ![Before: the whole pile of problems in one window](docs/img/workshop/v1.1/en/shot-1-before.png) | ![Scan: the survivor walks the road](docs/img/workshop/v1.1/en/shot-2-scan.png) | ![After: the street is clean — you survived](docs/img/workshop/v1.1/en/shot-4-after.png) |
+| The whole pile of problems, in one window. | Nothing runs until you press it — then the walk is the progress bar. | He made it to the end: the street is clean — you survived. |
+
+| One button instead of a manual | Manual mode: the table obeys you |
+|---|---|
+| ![Fix everything automatically](docs/img/workshop/v1.1/en/shot-3-button.png) | ![The sortable mods table](docs/img/workshop/v1.1/en/shot-5-buttons.png) |
+| 23 problems found — "Fix everything automatically" does the rest, backups first. | Click any column to sort (status sorts by meaning, ticked rows rise to the top), tick rows, then "Enable checked" / "Disable checked". |
 
 ## Install (30 seconds)
 
@@ -29,7 +37,7 @@ The start shows a "ready to check" card and the street below comes alive — but
 ## What it actually fixes
 
 - **Missing mods are fetched for you**: the requirement named in `require=` is looked up in the Workshop and its subscribe page opens; Steam downloads it, the program notices and re-checks by itself. A requirement that does not exist in the Workshop at all (deleted or never published)? The mods that demand it — and everything depending on them — are switched off in the saves, with a backup, so the warnings die for good.
-- **Manual management, when you want it**: tick mods in the table and press "Enable checked" or "Disable checked" — enabling pulls the installed requirements along, disabling takes the dependents with it (no orphan warnings after your own click), and Build 42's `workshopMods.txt` stays in sync. Every change is one click, one backup.
+- **Manual management, when you want it**: tick mods in the table and press "Enable checked" or "Disable checked" — enabling pulls the installed requirements along, disabling takes the dependents with it (no orphan warnings after your own click), and Build 42's `workshopMods.txt` stays in sync. Click any column header to sort the table — status sorts by meaning rather than alphabet, ticked rows rise to the top, and the order survives every re-check. Every change is one click, one backup.
 - Mods that are installed but not enabled in the save — enabled, in dependency order, with a `mods.txt` backup.
 - Duplicate modIDs (two Workshop items shipping the same id) and leftovers from unsubscribed mods.
 - Broken downloads (no `mod.info`) — removed so Steam re-downloads them; map/tile packs are recognized as content, not errors.
