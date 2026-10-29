@@ -158,18 +158,28 @@ footer a:hover{text-decoration:underline}
 'use strict';
 var SHOTS = {
   en: [
-    {file:'img/workshop/v1.1/en/shot-1-before.png', title:'Before — the whole pile of problems', cap:'The whole pile of problems, in one window.', alt:'Before: the whole pile of problems in one window'},
-    {file:'img/workshop/v1.1/en/shot-2-scan.png',   title:'Scan — the survivor walks the road',   cap:'Nothing runs until you press it — then the walk is the progress bar.', alt:'Scan: the survivor walks the road'},
-    {file:'img/workshop/v1.1/en/shot-4-after.png',  title:'After — the street is clean',          cap:'He made it to the end: the street is clean — you survived.', alt:'After: the street is clean — you survived'},
-    {file:'img/workshop/v1.1/en/shot-3-button.png', title:'One button instead of a manual',       cap:'23 problems found — "Fix everything automatically" does the rest, backups first.', alt:'Fix everything automatically'},
-    {file:'img/workshop/v1.1/en/shot-5-buttons.png',title:'Manual mode — the table obeys you',    cap:'Click any column to sort (status sorts by meaning, ticked rows rise to the top), tick rows, then "Enable checked" / "Disable checked".', alt:'The sortable mods table'}
+    {file:'img/workshop/v1.1/en/shot-1-before.png',     title:'Before — the whole pile of problems',  cap:'The game won\'t load the mods, half are off, the logs are a wall of errors. One run — and the whole picture is on the table.', alt:'Before: the whole pile of problems in one window'},
+    {file:'img/workshop/v1.1/en/shot-2-scan.png',       title:'Scan — nothing to configure',           cap:'One press of the green button — Steam, the game, the mods and the saves are found by themselves. The road below is the progress bar.', alt:'Scan: the survivor walks the road'},
+    {file:'img/workshop/v1.1/en/shot-3-button.png',     title:'One button instead of a manual',        cap:'23 problems found — "Fix everything automatically" does the rest, backups first.', alt:'Fix everything automatically'},
+    {file:'img/workshop/v1.1/en/shot-4-download.png',   title:'Missing mods download themselves',       cap:'A require= entry is looked up in the Workshop — the subscribe page opens, Steam downloads, the program notices and re-checks by itself.', alt:'Missing mods download themselves'},
+    {file:'img/workshop/v1.1/en/shot-5-orphans.png',    title:'Orphans die for good',                  cap:'The required mod is gone from the Workshop? The mods that need it are cleanly disabled in the saves — with a backup, and the warnings die for good.', alt:'Orphaned requirements are disabled with a backup'},
+    {file:'img/workshop/v1.1/en/shot-6-after.png',      title:'After — the street is clean',           cap:'Quarantine removed, broken downloads reinstalled, missing mods fetched — 23 → 0, everything in the repair log.', alt:'After: the street is clean — you survived'},
+    {file:'img/workshop/v1.1/en/shot-7-manual.png',     title:'Manual mode — the table obeys you',     cap:'Click any column to sort (status sorts by meaning, ticked rows rise to the top), tick rows, then "Enable checked" / "Disable checked".', alt:'The sortable mods table'},
+    {file:'img/workshop/v1.1/en/shot-8-details.png',    title:'Details — a full dossier on the mod',   cap:'Select a row: modID, paths and requirements on top, the live Workshop description below — tags, size, update date.', alt:'Mod details with the live Workshop description'},
+    {file:'img/workshop/v1.1/en/shot-9-optimizer.png',  title:'Optimizer — real, and everything rolls back', cap:'Game memory (-Xmx), Steam launch options, junk logs — every change is one button away from being undone.', alt:'The optimizer view'},
+    {file:'img/workshop/v1.1/en/shot-10-cli.png',       title:'CLI — the whole report in the terminal', cap:'-Cli -AutoFix in one command: same engine, same backups, zero windows.', alt:'CLI report and auto-fix in the terminal'}
   ],
   ru: [
-    {file:'img/workshop/v1.1/ru/shot-1-before.png', title:'До — вся куча проблем',                cap:'Вся куча проблем — в одном окне.', alt:'До: вся куча проблем в одном окне'},
-    {file:'img/workshop/v1.1/ru/shot-2-scan.png',   title:'Проверка — выживший идёт по дороге',  cap:'Ничего не происходит само — нажали, и прогулка стала прогрессом.', alt:'Проверка: выживший идёт по дороге'},
-    {file:'img/workshop/v1.1/ru/shot-4-after.png',  title:'После — улица чиста',                  cap:'Дошёл до конца: улица чиста — ты выжил.', alt:'После: улица чиста — ты выжил'},
-    {file:'img/workshop/v1.1/ru/shot-3-button.png', title:'Одна кнопка вместо инструкции',        cap:'23 проблемы найдены — «Исправить всё автоматически» сделает остальное, сначала бэкапы.', alt:'Исправить всё автоматически'},
-    {file:'img/workshop/v1.1/ru/shot-5-buttons.png',title:'Ручной режим — таблица слушается вас', cap:'Клик по любой колонке сортирует таблицу (статус — по смыслу, отмеченные поднимаются наверх), галочка выбирает строку — дальше «Включить отмеченные» / «Отключить отмеченные».', alt:'Сортируемая таблица модов'}
+    {file:'img/workshop/v1.1/ru/shot-1-before.png',     title:'До — вся куча проблем',                 cap:'Игра не грузит моды, половина выключена, в логах — стена ошибок. Один запуск — и вся картина видна целиком.', alt:'До: вся куча проблем в одном окне'},
+    {file:'img/workshop/v1.1/ru/shot-2-scan.png',       title:'Проверка — настраивать нечего',         cap:'Одно нажатие зелёной кнопки — Steam, игра, моды и сейвы находятся сами. Дорога внизу — индикатор прогресса.', alt:'Проверка: выживший идёт по дороге'},
+    {file:'img/workshop/v1.1/ru/shot-3-button.png',     title:'Одна кнопка вместо инструкции',         cap:'23 проблемы найдены — «Исправить всё автоматически» сделает остальное, сначала бэкапы.', alt:'Исправить всё автоматически'},
+    {file:'img/workshop/v1.1/ru/shot-4-download.png',   title:'Недостающие моды качаются сами',        cap:'Требование из require= ищется в Мастерской — страница подписки открывается сама, Steam качает, программа замечает и до-проверяет сама.', alt:'Недостающие моды скачиваются автоматически'},
+    {file:'img/workshop/v1.1/ru/shot-5-orphans.png',    title:'Сироты гасятся навсегда',               cap:'Требуемого мода в Мастерской нет? Зависимые моды аккуратно отключаются в сейвах — с бэкапом, и предупреждения исчезают навсегда.', alt:'Сиротские зависимости отключаются с бэкапом'},
+    {file:'img/workshop/v1.1/ru/shot-6-after.png',      title:'После — улица чиста',                   cap:'Карантин удалён, битые загрузки переустановлены, недостающие моды скачаны — 23 → 0, всё в журнале ремонтов.', alt:'После: улица чиста — ты выжил'},
+    {file:'img/workshop/v1.1/ru/shot-7-manual.png',     title:'Ручной режим — таблица слушается вас',  cap:'Клик по любой колонке сортирует таблицу (статус — по смыслу, отмеченные поднимаются наверх), галочка выбирает строку — дальше «Включить отмеченные» / «Отключить отмеченные».', alt:'Сортируемая таблица модов'},
+    {file:'img/workshop/v1.1/ru/shot-8-details.png',    title:'Детали — полное досье на мод',          cap:'Выберите строку: modID, пути и зависимости наверху, живое описание из Мастерской ниже — теги, размер, дата обновления.', alt:'Детали мода с живым описанием из Мастерской'},
+    {file:'img/workshop/v1.1/ru/shot-9-optimizer.png',  title:'Оптимизатор — настоящее, всё обратимо', cap:'Память игры (-Xmx), параметры запуска Steam, мусорные логи — каждое изменение откатывается одной кнопкой.', alt:'Окно оптимизатора'},
+    {file:'img/workshop/v1.1/ru/shot-10-cli.png',       title:'CLI — весь отчёт в терминале',          cap:'-Cli -AutoFix одной командой: тот же движок, те же бэкапы, ноль окон.', alt:'CLI-отчёт и автопочинка в терминале'}
   ]
 };
 var T = {
