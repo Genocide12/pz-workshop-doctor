@@ -1,0 +1,98 @@
+name: Build Windows EXE
+
+# Compiles PZ-WorkshopDoctor.ps1 into a single PZWorkshopDoctor.exe with ps2exe
+# on a Windows runner and attaches it to the release that triggered the build.
+# Manual runs (workflow_dispatch) upload the exe as a build artifact instead.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to attach the EXE to (e.g. v1.3.0)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install ps2exe (with retries + direct fallback)
+        shell: pwsh
+        run: |
+          $ok = $false
+          foreach ($i in 1..3) {
+            try {
+              Install-Module ps2exe -Scope CurrentUser -Force -Repository PSGallery -ErrorAction Stop
+              $ok = $true
+              break
+            } catch {
+              Write-Output "Install-Module attempt $i failed: $($_.Exception.Message)"
+              Start-Sleep -Seconds (15 * $i)
+            }
+          }
+          if (-not $ok) {
+            Write-Output 'Falling back to the standalone ps2exe.ps1 from the PS2EXE repo'
+            Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/MScholtes/PS2EXE/master/ps2exe.ps1' -OutFile .\ps2exe-standalone.ps1
+            . .\ps2exe-standalone.ps1
+          }
+          if (-not (Get-Command Invoke-PS2EXE -ErrorAction SilentlyContinue)) { throw 'Invoke-PS2EXE is not available' }
+
+      - name: Compile EXE
+        shell: pwsh
+        run: |
+          $v = '1.0'
+          if ('${{ github.event.release.tag_name }}') { $v = '${{ github.event.release.tag_name }}'.TrimStart('v') }
+          # NOTE: splatting must be a HASHTABLE - an array splat binds
+          # positionally and '-noConsole' ends up in the int-typed lcid param.
+          $p = @{
+            inputFile   = '.\PZ-WorkshopDoctor.ps1'
+            outputFile  = '.\PZWorkshopDoctor.exe'
+            icon        = '.\assets\icon.ico'
+            noConsole   = $true
+            noError     = $true
+            STA         = $true
+            title       = 'PZ Workshop Doctor'
+            description = 'Workshop mod doctor for Project Zomboid: scans Workshop folders, checks saves, finds broken mods (unofficial community tool, MIT)'
+            company     = 'Genocide12'
+            product     = 'PZ Workshop Doctor'
+            copyright   = '(c) 2026 Genocide12 (MIT)'
+            version     = $v
+          }
+          try { Invoke-PS2EXE @p }
+          catch {
+            Write-Output "retry without -STA: $($_.Exception.Message)"
+            $p.Remove('STA')
+            try { Invoke-PS2EXE @p }
+            catch {
+              Write-Output "retry minimal: $($_.Exception.Message)"
+              Invoke-PS2EXE -inputFile '.\PZ-WorkshopDoctor.ps1' -outputFile '.\PZWorkshopDoctor.exe' -noConsole
+            }
+          }
+          if (-not (Test-Path .\PZWorkshopDoctor.exe)) { throw 'exe was not produced' }
+
+      - name: Upload EXE to the release
+        if: github.event_name == 'release' || inputs.tag != ''
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = '${{ github.event.release.tag_name }}'
+          if (-not $tag) { $tag = '${{ inputs.tag }}' }
+          if (-not $tag) { throw 'no tag to upload to' }
+          gh release upload $tag .\PZWorkshopDoctor.exe --clobber
+          Write-Output "attached PZWorkshopDoctor.exe to $tag"
+
+      - name: Upload EXE as artifact (manual runs without tag)
+        if: github.event_name != 'release' && inputs.tag == ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: PZWorkshopDoctor-exe
+          path: .\PZWorkshopDoctor.exe
