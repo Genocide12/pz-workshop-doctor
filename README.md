@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://raw.githubusercontent.com/Genocide12/pz-workshop-doctor/main/docs/img/banner.png"><img src="docs/img/banner.png" alt="PZ Workshop Doctor" width="100%"></a>
+  <img src="docs/img/banner.png" alt="PZ Workshop Doctor" width="100%">
 </p>
 <p align="center">
   <a href="../../releases/latest"><img src="docs/img/button-download-en.png" alt="Download for Windows"></a>
@@ -16,12 +16,12 @@ Unofficial mod doctor for **Project Zomboid** (Steam Workshop). One file, one wi
 
 | It finds everything by itself | One green button | Done |
 |---|---|---|
-| [![Before: the whole pile of problems in one window](docs/img/workshop/v1.1/en/shot-1-before.png)](https://raw.githubusercontent.com/Genocide12/pz-workshop-doctor/main/docs/img/workshop/v1.1/en/shot-1-before.png) | [![Scan: the survivor walks the road](docs/img/workshop/v1.1/en/shot-2-scan.png)](https://raw.githubusercontent.com/Genocide12/pz-workshop-doctor/main/docs/img/workshop/v1.1/en/shot-2-scan.png) | [![After: the street is clean — you survived](docs/img/workshop/v1.1/en/shot-4-after.png)](https://raw.githubusercontent.com/Genocide12/pz-workshop-doctor/main/docs/img/workshop/v1.1/en/shot-4-after.png) |
+| ![Before: the whole pile of problems in one window](docs/img/workshop/v1.1/en/shot-1-before.png) | ![Scan: the survivor walks the road](docs/img/workshop/v1.1/en/shot-2-scan.png) | ![After: the street is clean — you survived](docs/img/workshop/v1.1/en/shot-4-after.png) |
 | The whole pile of problems, in one window. | Nothing runs until you press it — then the walk is the progress bar. | He made it to the end: the street is clean — you survived. |
 
 | One button instead of a manual | Manual mode: the table obeys you |
 |---|---|
-| [![Fix everything automatically](docs/img/workshop/v1.1/en/shot-3-button.png)](https://raw.githubusercontent.com/Genocide12/pz-workshop-doctor/main/docs/img/workshop/v1.1/en/shot-3-button.png) | [![The sortable mods table](docs/img/workshop/v1.1/en/shot-5-buttons.png)](https://raw.githubusercontent.com/Genocide12/pz-workshop-doctor/main/docs/img/workshop/v1.1/en/shot-5-buttons.png) |
+| ![Fix everything automatically](docs/img/workshop/v1.1/en/shot-3-button.png) | ![The sortable mods table](docs/img/workshop/v1.1/en/shot-5-buttons.png) |
 | 23 problems found — "Fix everything automatically" does the rest, backups first. | Click any column to sort (status sorts by meaning, ticked rows rise to the top), tick rows, then "Enable checked" / "Disable checked". |
 
 ## Install (30 seconds)

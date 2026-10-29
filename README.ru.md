@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://raw.githubusercontent.com/Genocide12/pz-workshop-doctor/main/docs/img/banner.png"><img src="docs/img/banner.png" alt="PZ Workshop Doctor" width="100%"></a>
+  <img src="docs/img/banner.png" alt="PZ Workshop Doctor" width="100%">
 </p>
 <p align="center">
   <a href="../../releases/latest"><img src="docs/img/button-download-ru.png" alt="Скачать для Windows"></a>
@@ -16,12 +16,12 @@
 
 | Сам находит всё | Одна зелёная кнопка | Готово |
 |---|---|---|
-| [![До: вся куча проблем в одном окне](docs/img/workshop/v1.1/ru/shot-1-before.png)](https://raw.githubusercontent.com/Genocide12/pz-workshop-doctor/main/docs/img/workshop/v1.1/ru/shot-1-before.png) | [![Проверка: выживший идёт по дороге](docs/img/workshop/v1.1/ru/shot-2-scan.png)](https://raw.githubusercontent.com/Genocide12/pz-workshop-doctor/main/docs/img/workshop/v1.1/ru/shot-2-scan.png) | [![После: улица чиста — ты выжил](docs/img/workshop/v1.1/ru/shot-4-after.png)](https://raw.githubusercontent.com/Genocide12/pz-workshop-doctor/main/docs/img/workshop/v1.1/ru/shot-4-after.png) |
+| ![До: вся куча проблем в одном окне](docs/img/workshop/v1.1/ru/shot-1-before.png) | ![Проверка: выживший идёт по дороге](docs/img/workshop/v1.1/ru/shot-2-scan.png) | ![После: улица чиста — ты выжил](docs/img/workshop/v1.1/ru/shot-4-after.png) |
 | Вся куча проблем — в одном окне. | Ничего не происходит само — нажали, и прогулка стала прогрессом. | Дошёл до конца: улица чиста — ты выжил. |
 
 | Одна кнопка вместо инструкции | Ручной режим: таблица слушается вас |
 |---|---|
-| [![Исправить всё автоматически](docs/img/workshop/v1.1/ru/shot-3-button.png)](https://raw.githubusercontent.com/Genocide12/pz-workshop-doctor/main/docs/img/workshop/v1.1/ru/shot-3-button.png) | [![Сортируемая таблица модов](docs/img/workshop/v1.1/ru/shot-5-buttons.png)](https://raw.githubusercontent.com/Genocide12/pz-workshop-doctor/main/docs/img/workshop/v1.1/ru/shot-5-buttons.png) |
+| ![Исправить всё автоматически](docs/img/workshop/v1.1/ru/shot-3-button.png) | ![Сортируемая таблица модов](docs/img/workshop/v1.1/ru/shot-5-buttons.png) |
 | 23 проблемы найдены — «Исправить всё автоматически» сделает остальное, сначала бэкапы. | Клик по любой колонке сортирует таблицу (статус — по смыслу, отмеченные поднимаются наверх), галочка выбирает строку — дальше «Включить отмеченные» / «Отключить отмеченные». |
 
 ## Установка (30 секунд)
