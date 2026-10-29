@@ -1,6 +1,6 @@
 ﻿#Requires -Version 5.1
 <#
-    PZ Workshop Doctor v1.0
+    PZ Workshop Doctor v1.1
     Unofficial mod manager and conflict doctor for Project Zomboid Steam Workshop.
 
     GUI : powershell -ExecutionPolicy Bypass -File .\PZ-WorkshopDoctor.ps1
@@ -31,7 +31,7 @@ param(
 )
 
 $ErrorActionPreference = 'Continue'
-$Script:Version = '1.0'
+$Script:Version = '1.1'
 $Script:ZomboidDir = $ZomboidDir
 
 # Language: an explicit -Lang RU|EN wins; otherwise it follows the Windows culture.
@@ -174,7 +174,7 @@ $Script:L10N['RU'] = @{
     done_nosaves      = 'Сейвы не найдены — укажите папку Zomboid, чтобы статусы заработали.'
     ws_fetching       = 'Загружаю описания из Мастерской Steam...'
     ws_fetched        = 'Описания Мастерской: получено {0} из {1}'
-    fun_text          = 'ВСЁ ХОРОШО!'
+    fun_text          = 'УЛИЦА ЧИСТА — ВЫ ВЫЖИЛИ!'
     fun_sub           = 'моды проверены — проблем нет'
     fun_note_fixed    = 'исправлено проблем: {0} → 0 · модов возвращено в сейвы: {1}'
     fun_note_nosaves  = 'сейвы не нашлись — моды в порядке; папку Zomboid можно указать кнопкой ниже'
@@ -352,7 +352,7 @@ $Script:L10N['EN'] = @{
     done_nosaves      = 'No saves found - set the Zomboid folder so the statuses start working.'
     ws_fetching       = 'Fetching descriptions from the Steam Workshop...'
     ws_fetched        = 'Workshop descriptions: received {0} of {1}'
-    fun_text          = 'ALL GOOD!'
+    fun_text          = 'THE STREET IS CLEAN — YOU SURVIVED!'
     fun_sub           = 'mods checked - no problems found'
     fun_note_fixed    = 'problems fixed: {0} -> 0 · mods restored into saves: {1}'
     fun_note_nosaves  = 'saves were not found - the mods are fine; the Zomboid folder can be set with the button below'
@@ -2680,7 +2680,7 @@ $Script:Xaml = @"
             </Style>
           </DataGrid.CellStyle>
           <DataGrid.Columns>
-            <DataGridTemplateColumn Header="✓" Width="34">
+            <DataGridTemplateColumn Header="✓" Width="34" SortMemberPath="Sel" CanUserSort="True">
               <DataGridTemplateColumn.CellTemplate>
                 <DataTemplate>
                   <CheckBox HorizontalAlignment="Center" Focusable="False" IsChecked="{Binding Sel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -2691,7 +2691,7 @@ $Script:Xaml = @"
             <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="290" IsReadOnly="True"/>
             <DataGridTextColumn Header="modID" Binding="{Binding ModIds}" Width="*" IsReadOnly="True"/>
             <DataGridTextColumn Header="WorkshopID" Binding="{Binding WorkshopId}" Width="90" IsReadOnly="True"/>
-            <DataGridTemplateColumn Header="Link" Width="80">
+            <DataGridTemplateColumn Header="Link" Width="80" SortMemberPath="Url" CanUserSort="True">
               <DataGridTemplateColumn.CellTemplate>
                 <DataTemplate>
                   <TextBlock HorizontalAlignment="Center">
@@ -2702,7 +2702,7 @@ $Script:Xaml = @"
                 </DataTemplate>
               </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
-            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="175" IsReadOnly="True"/>
+            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="175" IsReadOnly="True" SortMemberPath="StatusKind"/>
           </DataGrid.Columns>
         </DataGrid>
  <!-- draggable splitter: the details area can be made taller with
@@ -2786,6 +2786,7 @@ $Script:Busy = $false
 $Script:View = 'home'
 $Script:HomeLines = [System.Collections.Generic.List[string]]::new()
 $Script:HomeKind = 'idle'
+$Script:GridSort = $null
 $Script:FirstRun = $false
 $Script:FixBefore = 0
 $Script:SpAction1 = ''
@@ -2853,6 +2854,66 @@ function Get-CheckedOrSelected {
     return , $checked
 }
 
+function Get-GridSortKey([object]$Row, [string]$Prop) {
+ # the order a column MEANS, not the order its letters happen to be
+ # in: status sorts works -> disabled -> trouble -> no data, and the
+ # check column puts the ticked rows on top - they are the ones the
+ # buttons act on. Everything else sorts by its own type.
+    switch ($Prop) {
+        'StatusKind' {
+            switch ([string]$Row.StatusKind) {
+                'ACTIVE'     { return 0 }
+                'ORPHAN'     { return 1 }
+                'QUARANTINE' { return 2 }
+                'CONTENT'    { return 3 }
+                'NOINFO'     { return 4 }
+                'NOSAVE'     { return 5 }
+            }
+            return 9
+        }
+        'Sel' { if ($Row.Sel) { return 0 } else { return 1 } }
+        'Num' { return [int]$Row.Num }
+        default {
+            $v = [string]$Row.$Prop
+            if ($null -eq $v) { $v = '' }
+            return $v
+        }
+    }
+}
+
+function Sort-GridRows([System.Collections.Generic.List[object]]$Rows) {
+ # the chosen column order outlives every refresh: Update-Grid applies
+ # it while rebuilding, a header click applies it to the rows already
+ # on screen. "No" rides along as the tiebreaker, so equal keys never
+ # shuffle the table.
+    if (-not $Script:GridSort) { return }
+    if ($null -eq $Rows -or $Rows.Count -lt 2) { return }
+    $prop = [string]$Script:GridSort['Prop']
+    if (-not $prop) { return }
+    $desc = [bool]$Script:GridSort['Desc']
+    try {
+        $keys = @(
+            @{ Expression = { Get-GridSortKey $_ $prop } },
+            @{ Expression = { [int]$_.Num } }
+        )
+        $sorted = @($Rows.ToArray() | Sort-Object -Property $keys -Descending:$desc)
+        $Rows.Clear()
+        foreach ($r in $sorted) { if ($null -ne $r) { [void]$Rows.Add($r) } }
+    } catch { Write-CrashLog ('grid-sort: ' + $prop) $_ }
+}
+
+function Invoke-GridSort([string]$Prop, [bool]$Desc) {
+ # a header click: remember the column and direction, sort the rows
+ # that are on screen right now and hand them back to the grid - no
+ # rescan, no flicker, and every later rebuild keeps the same order.
+    $Script:GridSort = @{ Prop = $Prop; Desc = $Desc }
+    if (-not $Script:Ui -or -not $Script:Ui.Grid) { return }
+    $live = [System.Collections.Generic.List[object]]::new()
+    foreach ($r in (Get-Seq $Script:Ui.Grid.Items)) { if ($null -ne $r) { $live.Add($r) } }
+    Sort-GridRows $live
+    try { $Script:Ui.Grid.ItemsSource = $live.ToArray() } catch { Write-CrashLog 'grid-sort-assign' $_ }
+}
+
 function Update-Grid {
     param($CheckSet = $null, [switch]$Preserve)
     $prev = @{}
@@ -2911,6 +2972,8 @@ function Update-Grid {
             Write-CrashLog ('grid-row: ' + [string]$it['Folder']) $_
         }
     }
+ # the user's chosen column order survives the rebuild
+    Sort-GridRows $rows
     try { $Script:Ui.Grid.ItemsSource = $rows.ToArray() } catch { Write-CrashLog 'grid-assign' $_ }
 }
 
@@ -3082,7 +3145,7 @@ function Render-Home {
         }
         'allgood' {
  # the house-and-hearts cartoon is retired. The card
- # carries the good news itself: the "ВСЁ ХОРОШО!" title on
+ # carries the good news itself: the big victory line on
  # top, the check's own action log right below it
             $u.SpIcon.Text = '✓'
             $u.SpIcon.Foreground = '#8FBC6F'
@@ -5167,6 +5230,35 @@ function Invoke-GuiMode {
     $u.Grid.Add_SelectionChanged({
         if ($Script:Busy) { return }
         Invoke-Safe { Update-Details }
+    })
+
+ # a click on a column header sorts the table. The built-in view sort
+ # dies with the next ItemsSource rebuild anyway, so the order is kept
+ # by us: the click remembers column+direction and re-sorts the rows
+ # that are already on screen; every later rebuild applies it again.
+    $u.Grid.Add_Sorting({
+        param($s, $e)
+        Invoke-Safe {
+ # Handled cancels the built-in ListCollectionView sort - the order
+ # comes from Sort-GridRows, not from the view
+            $e.Handled = $true
+            $prop = [string]$e.Column.SortMemberPath
+            if (-not $prop) { return }
+            $desc = $false
+            if ($Script:GridSort -and ([string]$Script:GridSort['Prop'] -eq $prop)) {
+                $desc = -not [bool]$Script:GridSort['Desc']
+            }
+            Invoke-GridSort $prop $desc
+ # the little arrow in the clicked header tells the truth again
+            try {
+                foreach ($c in (Get-Seq $Script:Ui.Grid.Columns)) { $c.SortDirection = $null }
+                if ($desc) {
+                    $e.Column.SortDirection = [System.ComponentModel.ListSortDirection]::Descending
+                } else {
+                    $e.Column.SortDirection = [System.ComponentModel.ListSortDirection]::Ascending
+                }
+            } catch { }
+        }
     })
 
  # TWO buttons where the mood-swinger used to be. A tick in a
