@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d1117">
+<title>PZ Workshop Doctor — Screenshots</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230d1117'/><path d='M26 12h12v14h14v12H38v14H26V38H12V26h14z' fill='%238A9A5B'/></svg>">
+<style>
+:root{
+  --bg:#0d1117; --panel:#151b23; --panel2:#1b232e;
+  --text:#e6edf3; --muted:#93a1b0;
+  --green:#8A9A5B; --green-dim:#5f6c3f;
+  --amber:#C9963C; --line:#28313d;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg); color:var(--text);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans","Noto Sans SC",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:36px 22px 64px}
+header h1{font-size:27px;letter-spacing:.2px;font-weight:700}
+header h1 .zz{color:var(--green)}
+.sub{color:var(--muted);margin-top:5px;font-size:15px}
+.tabs{display:flex;gap:8px;margin-top:20px}
+.tabs button{
+  background:var(--panel); border:1px solid var(--line); color:var(--muted);
+  padding:7px 20px; border-radius:9px; cursor:pointer; font-size:14px; font-weight:600;
+  transition:border-color .15s,color .15s,background .15s;
+}
+.tabs button:hover{color:var(--text)}
+.tabs button.active{color:var(--text); border-color:var(--green-dim); background:#1a2313}
+.road{
+  margin:26px 0 30px; height:16px; border-radius:4px; position:relative; overflow:hidden;
+  background:repeating-linear-gradient(90deg,#343a41 0 64px,#3c434b 64px 128px);
+  border-top:1px solid #464d56; border-bottom:1px solid #20262d;
+}
+.road::after{
+  content:""; position:absolute; left:0; right:0; top:50%; height:2px; transform:translateY(-50%);
+  background:repeating-linear-gradient(90deg,#d9c26a 0 28px,transparent 28px 52px);
+}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px}
+.card{
+  background:var(--panel); border:1px solid var(--line); border-radius:12px; overflow:hidden;
+  cursor:pointer; transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;
+}
+.card:hover,.card:focus-visible{transform:translateY(-3px);border-color:var(--green-dim);box-shadow:0 8px 26px rgba(0,0,0,.35)}
+.card .thumb{width:100%;height:186px;object-fit:cover;object-position:top;display:block;background:#0a0e13}
+.card .t{padding:13px 16px 3px;font-weight:600;font-size:15px}
+.card .c{padding:2px 16px 15px;color:var(--muted);font-size:13.5px;line-height:1.55}
+footer{margin-top:46px;color:var(--muted);font-size:13.5px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+footer a{color:var(--green);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+/* ---------- lightbox ---------- */
+.lb{position:fixed;inset:0;z-index:60;background:rgba(4,6,10,.95);display:flex;flex-direction:column}
+.lb[hidden]{display:none}
+.lb-top{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 20px;flex-wrap:wrap}
+.lb-count{color:var(--muted);font-size:14.5px;letter-spacing:.4px}
+.lb-count b{color:var(--text)}
+.lb-actions{display:flex;gap:10px;align-items:center}
+.lb-btn{
+  background:var(--panel2); border:1px solid var(--line); color:var(--text);
+  border-radius:9px; padding:7px 16px; font-size:13.5px; font-weight:600; cursor:pointer;
+  text-decoration:none; display:inline-flex; align-items:center; gap:7px;
+  transition:border-color .15s,background .15s;
+}
+.lb-btn:hover{border-color:var(--green-dim);background:#212b36}
+.lb-stage{
+  flex:1; min-height:0; display:flex; align-items:center; justify-content:center;
+  position:relative; overflow:auto; padding:8px 74px;
+}
+.lb-stage img{
+  max-width:100%; max-height:74vh; border-radius:7px; display:block;
+  box-shadow:0 14px 50px rgba(0,0,0,.6); cursor:zoom-in;
+  transition:max-width .15s,max-height .15s;
+}
+.lb-stage img.zoomed{cursor:zoom-out;max-width:none;max-height:none;width:178%;height:auto}
+.lb-nav{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:52px; height:52px; border-radius:50%;
+  background:rgba(21,27,35,.85); border:1px solid var(--line); color:var(--text);
+  font-size:26px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:border-color .15s,background .15s; user-select:none;
+}
+.lb-nav:hover{border-color:var(--green);background:#1f2933}
+.lb-prev{left:14px}
+.lb-next{right:14px}
+.lb-cap{padding:12px 24px 18px;text-align:center}
+.lb-cap .t{font-weight:600;font-size:15.5px}
+.lb-cap .c{color:var(--muted);font-size:13.5px;margin-top:3px}
+.lb-hint{color:#6e7d8c;font-size:12px;margin-top:8px;letter-spacing:.3px}
+@media (max-width:640px){
+  .lb-stage{padding:8px 10px}
+  .lb-nav{width:44px;height:44px}
+  .lb-prev{left:6px}
+  .lb-next{right:6px}
+  .lb-stage img{max-height:62vh}
+  .lb-cap{padding:10px 14px 14px}
+  .lb-hint{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>PZ Workshop <span class="zz">Doctor</span></h1>
+    <p class="sub" id="sub">Screenshots</p>
+    <div class="tabs">
+      <button id="tab-en" class="active" type="button">English</button>
+      <button id="tab-ru" type="button">Русский</button>
+    </div>
+  </header>
+  <div class="road" aria-hidden="true"></div>
+  <main class="grid" id="grid"></main>
+  <footer>
+    <span>PZ Workshop Doctor · MIT License</span>
+    <span>·</span>
+    <a id="repoLink" href="https://github.com/Genocide12/pz-workshop-doctor" target="_blank" rel="noopener">github.com/Genocide12/pz-workshop-doctor</a>
+  </footer>
+</div>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Screenshot viewer">
+  <div class="lb-top">
+    <div class="lb-count" id="lbCount"></div>
+    <div class="lb-actions">
+      <a class="lb-btn" id="lbDl" download>Download</a>
+      <button class="lb-btn" id="lbClose" type="button" aria-label="Close">✕</button>
+    </div>
+  </div>
+  <div class="lb-stage" id="lbStage">
+    <button class="lb-nav lb-prev" id="lbPrev" type="button" aria-label="Previous">‹</button>
+    <img id="lbImg" alt="">
+    <button class="lb-nav lb-next" id="lbNext" type="button" aria-label="Next">›</button>
+  </div>
+  <div class="lb-cap">
+    <div class="t" id="lbTitle"></div>
+    <div class="c" id="lbCap"></div>
+    <div class="lb-hint" id="lbHint"></div>
+  </div>
+</div>
+
+<script>
+'use strict';
+var SHOTS = {
+  en: [
+    {file:'img/workshop/v1.1/en/shot-1-before.png', title:'Before — the whole pile of problems', cap:'The whole pile of problems, in one window.', alt:'Before: the whole pile of problems in one window'},
+    {file:'img/workshop/v1.1/en/shot-2-scan.png',   title:'Scan — the survivor walks the road',   cap:'Nothing runs until you press it — then the walk is the progress bar.', alt:'Scan: the survivor walks the road'},
+    {file:'img/workshop/v1.1/en/shot-4-after.png',  title:'After — the street is clean',          cap:'He made it to the end: the street is clean — you survived.', alt:'After: the street is clean — you survived'},
+    {file:'img/workshop/v1.1/en/shot-3-button.png', title:'One button instead of a manual',       cap:'23 problems found — "Fix everything automatically" does the rest, backups first.', alt:'Fix everything automatically'},
+    {file:'img/workshop/v1.1/en/shot-5-buttons.png',title:'Manual mode — the table obeys you',    cap:'Click any column to sort (status sorts by meaning, ticked rows rise to the top), tick rows, then "Enable checked" / "Disable checked".', alt:'The sortable mods table'}
+  ],
+  ru: [
+    {file:'img/workshop/v1.1/ru/shot-1-before.png', title:'До — вся куча проблем',                cap:'Вся куча проблем — в одном окне.', alt:'До: вся куча проблем в одном окне'},
+    {file:'img/workshop/v1.1/ru/shot-2-scan.png',   title:'Проверка — выживший идёт по дороге',  cap:'Ничего не происходит само — нажали, и прогулка стала прогрессом.', alt:'Проверка: выживший идёт по дороге'},
+    {file:'img/workshop/v1.1/ru/shot-4-after.png',  title:'После — улица чиста',                  cap:'Дошёл до конца: улица чиста — ты выжил.', alt:'После: улица чиста — ты выжил'},
+    {file:'img/workshop/v1.1/ru/shot-3-button.png', title:'Одна кнопка вместо инструкции',        cap:'23 проблемы найдены — «Исправить всё автоматически» сделает остальное, сначала бэкапы.', alt:'Исправить всё автоматически'},
+    {file:'img/workshop/v1.1/ru/shot-5-buttons.png',title:'Ручной режим — таблица слушается вас', cap:'Клик по любой колонке сортирует таблицу (статус — по смыслу, отмеченные поднимаются наверх), галочка выбирает строку — дальше «Включить отмеченные» / «Отключить отмеченные».', alt:'Сортируемая таблица модов'}
+  ]
+};
+var T = {
+  en: {sub:'Screenshots', count:'{n} / {total}', download:'Download', hint:'← → to browse · click the image to zoom · Esc to close'},
+  ru: {sub:'Скриншоты',   count:'{n} / {total}', download:'Скачать',   hint:'← → листать · клик по картинке — приблизить · Esc — закрыть'}
+};
+var REPO = 'https://github.com/Genocide12/pz-workshop-doctor';
+
+var lang = 'en', idx = 0, isOpen = false;
+var grid = document.getElementById('grid');
+var lb = document.getElementById('lb');
+var lbImg = document.getElementById('lbImg');
+var lbCount = document.getElementById('lbCount');
+var lbTitle = document.getElementById('lbTitle');
+var lbCap = document.getElementById('lbCap');
+var lbDl = document.getElementById('lbDl');
+var lbHint = document.getElementById('lbHint');
+var lbStage = document.getElementById('lbStage');
+var tabEn = document.getElementById('tab-en');
+var tabRu = document.getElementById('tab-ru');
+var sub = document.getElementById('sub');
+
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function renderGrid(){
+  var html = '';
+  for (var i = 0; i < SHOTS[lang].length; i++){
+    var s = SHOTS[lang][i];
+    html += '<figure class="card" tabindex="0" role="button" data-i="' + i + '" aria-label="' + esc(s.alt) + '">'
+         +  '<img class="thumb" src="' + s.file + '" alt="' + esc(s.alt) + '" loading="lazy">'
+         +  '<figcaption><div class="t">' + esc(s.title) + '</div><div class="c">' + esc(s.cap) + '</div></figcaption>'
+         +  '</figure>';
+  }
+  grid.innerHTML = html;
+}
+function applyTexts(){
+  var t = T[lang];
+  sub.textContent = t.sub;
+  lbHint.textContent = t.hint;
+  lbDl.textContent = t.download;
+  tabEn.className = lang === 'en' ? 'active' : '';
+  tabRu.className = lang === 'ru' ? 'active' : '';
+  document.documentElement.lang = lang;
+  document.title = (lang === 'ru' ? 'PZ Workshop Doctor — Скриншоты' : 'PZ Workshop Doctor — Screenshots');
+}
+function switchLang(l, push){
+  lang = l; applyTexts(); renderGrid();
+  if (push) history.replaceState(null, '', '#' + lang + (isOpen ? '-' + (idx + 1) : ''));
+}
+function preload(){
+  var n = SHOTS[lang].length;
+  [ (idx - 1 + n) % n, (idx + 1) % n ].forEach(function(j){
+    var im = new Image(); im.src = SHOTS[lang][j].file;
+  });
+}
+function renderLB(){
+  var s = SHOTS[lang][idx], t = T[lang];
+  lbImg.className = ''; lbImg.src = s.file; lbImg.alt = s.alt;
+  lbStage.scrollLeft = 0; lbStage.scrollTop = 0;
+  lbCount.innerHTML = esc(t.count).replace('{n}','<b>' + (idx + 1) + '</b>').replace('{total}', SHOTS[lang].length);
+  lbTitle.textContent = s.title;
+  lbCap.textContent = s.cap;
+  lbDl.setAttribute('href', s.file);
+  lbDl.setAttribute('download', s.file.split('/').pop());
+  preload();
+}
+function openLB(i){
+  idx = i; isOpen = true;
+  renderLB(); lb.hidden = false;
+  document.body.style.overflow = 'hidden';
+  history.replaceState(null, '', '#' + lang + '-' + (idx + 1));
+  lbClose.focus();
+}
+function closeLB(){
+  isOpen = false; lb.hidden = true;
+  document.body.style.overflow = '';
+  lbImg.className = '';
+  history.replaceState(null, '', '#' + lang);
+}
+function nav(d){
+  var n = SHOTS[lang].length;
+  idx = (idx + d + n) % n;
+  renderLB();
+  history.replaceState(null, '', '#' + lang + '-' + (idx + 1));
+}
+function toggleZoom(){
+  lbImg.className = lbImg.className === 'zoomed' ? '' : 'zoomed';
+}
+function parseHash(){
+  var m = location.hash.match(/^#(en|ru)-(\d+)$/);
+  if (m){
+    if (lang !== m[1]) switchLang(m[1], false);
+    var i = Math.min(Math.max(parseInt(m[2], 10) - 1, 0), SHOTS[lang].length - 1);
+    if (!isOpen) openLB(i);
+    else { idx = i; renderLB(); }
+    return;
+  }
+  var l = location.hash.match(/^#(en|ru)$/);
+  if (l){ if (lang !== l[1]) switchLang(l[1], false); if (isOpen) closeLB(); return; }
+  if (isOpen) closeLB();
+}
+
+grid.addEventListener('click', function(e){
+  var card = e.target.closest('.card');
+  if (card) openLB(parseInt(card.getAttribute('data-i'), 10));
+});
+grid.addEventListener('keydown', function(e){
+  var card = e.target.closest('.card');
+  if (card && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); openLB(parseInt(card.getAttribute('data-i'), 10)); }
+});
+tabEn.addEventListener('click', function(){ switchLang('en', true); });
+tabRu.addEventListener('click', function(){ switchLang('ru', true); });
+document.getElementById('lbClose').addEventListener('click', closeLB);
+document.getElementById('lbPrev').addEventListener('click', function(){ nav(-1); });
+document.getElementById('lbNext').addEventListener('click', function(){ nav(1); });
+lbImg.addEventListener('click', toggleZoom);
+lb.addEventListener('click', function(e){ if (e.target === lb || e.target === lbStage) closeLB(); });
+document.addEventListener('keydown', function(e){
+  if (!isOpen) return;
+  if (e.key === 'ArrowLeft') nav(-1);
+  else if (e.key === 'ArrowRight') nav(1);
+  else if (e.key === 'Escape') closeLB();
+  else if (e.key === '+' || e.key === '=') { if (lbImg.className !== 'zoomed') toggleZoom(); }
+  else if (e.key === '-') { if (lbImg.className === 'zoomed') toggleZoom(); }
+});
+var tx = 0, ty = 0;
+lbStage.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, {passive:true});
+lbStage.addEventListener('touchend', function(e){
+  var dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+  if (Math.abs(dx) > 55 && Math.abs(dy) < 90) nav(dx > 0 ? -1 : 1);
+}, {passive:true});
+window.addEventListener('hashchange', parseHash);
+
+applyTexts(); renderGrid(); parseHash();
+</script>
+</body>
+</html>
