@@ -36,10 +36,10 @@ $p = @{
     noError     = $true
     STA         = $true
     title       = 'PZ Workshop Doctor'
-    description = 'Workshop mod doctor for Project Zomboid: scans Workshop folders, checks saves, finds broken mods (unofficial community tool, MIT)'
+    description = 'Workshop mod doctor for Project Zomboid: scans Workshop folders, checks saves, finds broken mods (unofficial community tool)'
     company     = 'Genocide12'
     product     = 'PZ Workshop Doctor'
-    copyright   = '(c) 2026 Genocide12 (MIT)'
+    copyright   = '(c) 2026 Genocide12'
     version     = $version
 }
 try { Invoke-PS2EXE @p }

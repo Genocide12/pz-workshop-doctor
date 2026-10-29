@@ -49,4 +49,4 @@ powershell -ExecutionPolicy Bypass -File .\PZ-WorkshopDoctor.ps1 -Cli -AutoFix  
 
 ## Links
 
-[Releases](../../releases/latest) · [Русское README](README.ru.md) · [MIT License](LICENSE) — community tool, not affiliated with The Indie Stone or Valve.
+[Releases](../../releases/latest) · [Русское README](README.ru.md) — community tool, not affiliated with The Indie Stone or Valve.

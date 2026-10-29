@@ -11,7 +11,6 @@
     interface language. The script can live in any folder and be run from anywhere.
 
     Unofficial community tool. Not affiliated with The Indie Stone or Valve.
-    License: MIT.
 #>
 [CmdletBinding()]
 param(

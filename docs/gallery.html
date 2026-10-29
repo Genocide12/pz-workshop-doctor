@@ -21,6 +21,15 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 .wrap{max-width:1080px;margin:0 auto;padding:36px 22px 64px}
+.back{
+  display:inline-flex;align-items:center;gap:9px;margin-bottom:20px;
+  background:var(--panel); border:1px solid var(--line); color:var(--text);
+  padding:9px 18px; border-radius:9px; cursor:pointer;
+  font-size:14px; font-weight:600; text-decoration:none; white-space:nowrap;
+  transition:border-color .15s,background .15s,transform .16s ease;
+}
+.back:hover,.back:focus-visible{border-color:var(--green-dim);background:#1a2313;transform:translateY(-1px)}
+.back .arr{color:var(--green);font-size:17px;line-height:1}
 header h1{font-size:27px;letter-spacing:.2px;font-weight:700}
 header h1 .zz{color:var(--green)}
 .sub{color:var(--muted);margin-top:5px;font-size:15px}
@@ -105,6 +114,9 @@ footer a:hover{text-decoration:underline}
 </head>
 <body>
 <div class="wrap">
+  <a class="back" id="backBtn" href="https://github.com/Genocide12/pz-workshop-doctor">
+    <span class="arr" aria-hidden="true">←</span><span id="backTxt">Back to repository</span>
+  </a>
   <header>
     <h1>PZ Workshop <span class="zz">Doctor</span></h1>
     <p class="sub" id="sub">Screenshots</p>
@@ -116,7 +128,7 @@ footer a:hover{text-decoration:underline}
   <div class="road" aria-hidden="true"></div>
   <main class="grid" id="grid"></main>
   <footer>
-    <span>PZ Workshop Doctor · MIT License</span>
+    <span>PZ Workshop Doctor</span>
     <span>·</span>
     <a id="repoLink" href="https://github.com/Genocide12/pz-workshop-doctor" target="_blank" rel="noopener">github.com/Genocide12/pz-workshop-doctor</a>
   </footer>
@@ -161,8 +173,8 @@ var SHOTS = {
   ]
 };
 var T = {
-  en: {sub:'Screenshots', count:'{n} / {total}', download:'Download', hint:'← → to browse · click the image to zoom · Esc to close'},
-  ru: {sub:'Скриншоты',   count:'{n} / {total}', download:'Скачать',   hint:'← → листать · клик по картинке — приблизить · Esc — закрыть'}
+  en: {sub:'Screenshots', back:'Back to repository', count:'{n} / {total}', download:'Download', hint:'← → to browse · click the image to zoom · Esc to close'},
+  ru: {sub:'Скриншоты',   back:'Назад в репозиторий', count:'{n} / {total}', download:'Скачать',   hint:'← → листать · клик по картинке — приблизить · Esc — закрыть'}
 };
 var REPO = 'https://github.com/Genocide12/pz-workshop-doctor';
 
@@ -196,6 +208,7 @@ function renderGrid(){
 function applyTexts(){
   var t = T[lang];
   sub.textContent = t.sub;
+  document.getElementById('backTxt').textContent = t.back;
   lbHint.textContent = t.hint;
   lbDl.textContent = t.download;
   tabEn.className = lang === 'en' ? 'active' : '';
