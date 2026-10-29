@@ -16,12 +16,12 @@ Unofficial mod doctor for **Project Zomboid** (Steam Workshop). One file, one wi
 
 | It finds everything by itself | One green button | Done |
 |---|---|---|
-| ![Before: the whole pile of problems in one window](docs/img/workshop/v1.1/en/shot-1-before.png) | ![Scan: the survivor walks the road](docs/img/workshop/v1.1/en/shot-2-scan.png) | ![After: the street is clean — you survived](docs/img/workshop/v1.1/en/shot-4-after.png) |
+| [![Before: the whole pile of problems in one window](docs/img/workshop/v1.1/en/shot-1-before.png)](https://genocide12.github.io/pz-workshop-doctor/gallery.html#en-1) | [![Scan: the survivor walks the road](docs/img/workshop/v1.1/en/shot-2-scan.png)](https://genocide12.github.io/pz-workshop-doctor/gallery.html#en-2) | [![After: the street is clean — you survived](docs/img/workshop/v1.1/en/shot-4-after.png)](https://genocide12.github.io/pz-workshop-doctor/gallery.html#en-3) |
 | The whole pile of problems, in one window. | Nothing runs until you press it — then the walk is the progress bar. | He made it to the end: the street is clean — you survived. |
 
 | One button instead of a manual | Manual mode: the table obeys you |
 |---|---|
-| ![Fix everything automatically](docs/img/workshop/v1.1/en/shot-3-button.png) | ![The sortable mods table](docs/img/workshop/v1.1/en/shot-5-buttons.png) |
+| [![Fix everything automatically](docs/img/workshop/v1.1/en/shot-3-button.png)](https://genocide12.github.io/pz-workshop-doctor/gallery.html#en-4) | [![The sortable mods table](docs/img/workshop/v1.1/en/shot-5-buttons.png)](https://genocide12.github.io/pz-workshop-doctor/gallery.html#en-5) |
 | 23 problems found — "Fix everything automatically" does the rest, backups first. | Click any column to sort (status sorts by meaning, ticked rows rise to the top), tick rows, then "Enable checked" / "Disable checked". |
 
 ## Install (30 seconds)
